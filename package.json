@@ -1,0 +1,22 @@
+{
+  "name": "jest-test-cases",
+  "version": "1.0.0",
+  "description": "This is a node.js POC project to have some overview about test cases using jest.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "start:dev": "nodemon server.js",
+    "test": "jest"
+  },
+  "author": "Rohitash Kator",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "express": "^4.21.1",
+    "mongoose": "^8.8.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.7"
+  }
+}
