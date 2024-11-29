@@ -1,7 +1,8 @@
 const Product = require("../models/Product");
 
 const addProduct = (req, res, next) => {
-  const product = new Product(req.body.title);
+  const { title, imageUrl, description, price } = req.body;
+  const product = new Product(title, imageUrl, description, price);
   product.save();
   res.redirect("/");
 };
@@ -17,10 +18,10 @@ const getProduct = (req, res, next) => {
 
 const getProducts = (req, res, next) => {
   Product.fetchAll((products) => {
-    res.render("shop/product-list", {
+    res.render("admin/products", {
       prods: products,
-      pageTitle: "Shop",
-      path: "/",
+      pageTitle: "Admin Products",
+      path: "/admin/products",
       formsCss: false,
       productCss: true,
     });

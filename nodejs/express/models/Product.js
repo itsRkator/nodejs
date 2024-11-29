@@ -14,9 +14,21 @@ const readProductsFromJson = (cb) => {
   });
 };
 
+const generateUUID = () => {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0; // Random number between 0 and 15
+    const v = c === "x" ? r : (r & 0x3) | 0x8; // Set the variant (4 and y)
+    return v.toString(16); // Convert to hexadecimal
+  });
+};
+
 class Product {
-  constructor(title) {
+  constructor(title, imageUrl, description, price) {
+    this.id = generateUUID();
     this.title = title;
+    this.imageUrl = imageUrl;
+    this.description = description;
+    this.price = price;
   }
 
   save() {
