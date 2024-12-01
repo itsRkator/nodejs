@@ -1,9 +1,1 @@
-[
-  {
-    "id": "00fe0d85-cdc1-4727-8f8a-bf5adb9ba75f",
-    "title": "Introduction to Algorithms",
-    "imageUrl": "https://m.media-amazon.com/images/I/616c+ys7RBL._UF1000,1000_QL80_.jpg",
-    "description": "A comprehensive update of the leading algorithms text, with new material on matchings in bipartite graphs, online algorithms, machine learning, and other topics. Some books on algorithms are rigorous but incomplete; others cover masses of material but lack rigor.",
-    "price": "92.99"
-  }
-]
+[{"id":"c22f8641-29ae-401b-a8b9-76aece083071","title":"DSLR Camera","imageUrl":"https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-1080x675.jpg","description":"A high quality DSLR camera you love.","price":"300"},{"id":"600a67ef-6211-485e-aef2-1dfadbeed652","title":"asdfdsf","imageUrl":"asdfasdfsadf","description":"asdfsadfsadf","price":"8"}]
