@@ -13,8 +13,7 @@ const authRoutes = require("./routes/auth");
 
 const { notFoundError } = require("./controllers/error");
 
-const MONGODB_URI =
-  "MONGO_URI"; // To be Replaced with actual MongoDB URI using string or environment variable
+const MONGODB_URI = "MONGO_URI"; // To be Replaced with actual MongoDB URI using string or environment variable
 
 const app = express();
 const store = new MongoDBStore({
