@@ -11,6 +11,7 @@ const getProducts = (req, res, next) => {
         path: "/products",
         formsCss: false,
         productCss: true,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -29,6 +30,7 @@ const getProduct = (req, res, next) => {
         path: "/products",
         formsCss: false,
         productCss: false,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -45,6 +47,7 @@ const getIndex = (req, res, next) => {
         path: "/",
         formsCss: false,
         productCss: true,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -63,6 +66,7 @@ const getCart = (req, res, next) => {
         products: products,
         formsCss: false,
         productCss: true,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -141,6 +145,7 @@ const getOrders = (req, res, next) => {
         formsCss: false,
         productCss: true,
         orders,
+        isAuthenticated: req.session.isLoggedIn,
       });
     })
     .catch((err) => {
@@ -154,6 +159,7 @@ const getOrders = (req, res, next) => {
 //     path: "/checkout",
 //     formsCss: false,
 //     productCss: false,
+//     isAuthenticated: req.session.isLoggedIn,
 //   });
 // };
 

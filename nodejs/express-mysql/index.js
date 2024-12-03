@@ -35,7 +35,7 @@ app.use((req, res, next) => {
       next();
     })
     .catch((err) => {
-      console.log(err);
+      console.error(err);
     });
 });
 
@@ -71,7 +71,7 @@ sequelize
     return user;
   })
   .then((user) => {
-    console.log(user);
+    // console.log(user);
     return user.createCart();
   })
   .then((cart) => {

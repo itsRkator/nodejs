@@ -29,7 +29,6 @@ const requestHandler = (req, res) => {
 
     return req.on("end", () => {
       const parsedBody = Buffer.concat(body).toString();
-      console.log(parsedBody);
       const message = parsedBody.split("=")[1];
       fs.writeFile("message_container.txt", message, (err) => {
         if (err) {

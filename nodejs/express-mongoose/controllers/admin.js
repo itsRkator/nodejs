@@ -60,7 +60,7 @@ const getProducts = (req, res, next) => {
     // .select("title price -_id")
     // .populate("userId", "name")
     .then((products) => {
-      console.log(products);
+      // console.log(products);
       res.render("admin/products", {
         prods: products,
         pageTitle: "Admin Products",
