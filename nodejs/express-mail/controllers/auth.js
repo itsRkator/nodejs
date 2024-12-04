@@ -8,6 +8,7 @@ const mailer = nodemailer.createTransport(
   sgTransport({
     auth: {
       api_key:
+        process.env.SG_API_KEY ||
         "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", // To be replaced and used via environment variables
     },
   })
