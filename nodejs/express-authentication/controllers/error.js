@@ -4,7 +4,6 @@ const notFoundError = (req, res, next) => {
     path: "/error-page",
     formsCss: false,
     productCss: false,
-    isAuthenticated: req.session.isLoggedIn,
   });
 };
 
