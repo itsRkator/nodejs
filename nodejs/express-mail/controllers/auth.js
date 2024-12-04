@@ -7,7 +7,8 @@ const User = require("../models/User");
 const mailer = nodemailer.createTransport(
   sgTransport({
     auth: {
-      // api_key: "", // SendGrid API key must be used via environment variables
+      api_key:
+        "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", // To be replaced and used via environment variables
     },
   })
 );
