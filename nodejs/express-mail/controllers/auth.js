@@ -8,7 +8,7 @@ const mailer = nodemailer.createTransport(
   sgTransport({
     auth: {
       api_key:
-        "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", // SendGrid API key must be used via environment variables
+        "<SEND_GRID_API_KEYS>", // SendGrid API key must be used via environment variables
     },
   })
 );
