@@ -59,11 +59,14 @@ app.use((req, res, next) => {
   }
   User.findById(req.session.user._id)
     .then((user) => {
+      if (!user) {
+        next();
+      }
       req.user = user;
       next();
     })
     .catch((err) => {
-      next(err);
+      next(new Error(err));
     });
 });
 
@@ -71,11 +74,17 @@ app.use("/admin", adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
-app.use("/internal-server-error", internalServerError);
+app.get("/server-error", internalServerError);
 app.use(notFoundError);
 
 app.use((err, req, res, next) => {
-  res.redirect("internal-server-error");
+  // res.redirect("/server-error");
+  res.render("500", {
+    pageTitle: "500 - Server Error!",
+    path: "/server-error",
+    formsCss: false,
+    productCss: false,
+  });
 });
 
 mongoose

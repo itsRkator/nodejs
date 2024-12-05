@@ -1,6 +1,6 @@
 const notFoundError = (req, res, next) => {
   res.render("404", {
-    pageTitle: "404 - Not Found",
+    pageTitle: "404 - Not Found!",
     path: "/error-page",
     formsCss: false,
     productCss: false,
@@ -9,8 +9,8 @@ const notFoundError = (req, res, next) => {
 
 const internalServerError = (req, res, next) => {
   res.render("500", {
-    pageTitle: "500 - Internal Server Error",
-    path: "/error-page",
+    pageTitle: "500 - Server Error!",
+    path: "/server-error",
     formsCss: false,
     productCss: false,
   });

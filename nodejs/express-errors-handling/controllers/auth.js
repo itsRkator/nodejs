@@ -116,7 +116,7 @@ const postLogin = (req, res, next) => {
         });
     })
     .catch((err) => {
-      const error = new Error(err);
+      const error = new Error("Something went wrong, please try again.");
       error.httpStatusCode = 500;
       return next(error);
     });
@@ -133,8 +133,7 @@ const postLogin = (req, res, next) => {
 //       res.redirect("/");
 //     })
 //     .catch((err) => {
-//       // console.error(err);
-//       const error = new Error(err);
+//       const error = new Error("Something went wrong, please try again.");
 //       error.httpStatusCode = 500;
 //       return next(error);
 //     });
@@ -189,7 +188,7 @@ const postSignup = (req, res, next) => {
       console.log(result);
     })
     .catch((err) => {
-      const error = new Error(err);
+      const error = new Error("Something went wrong, please try again.");
       error.httpStatusCode = 500;
       return next(error);
     });
@@ -270,7 +269,7 @@ const postReset = (req, res, next) => {
         console.log(result);
       })
       .catch((err) => {
-        const error = new Error(err);
+        const error = new Error("Something went wrong, please try again.");
         error.httpStatusCode = 500;
         return next(error);
       });
@@ -306,7 +305,7 @@ const getNewPassword = (req, res, next) => {
       });
     })
     .catch((err) => {
-      const error = new Error(err);
+      const error = new Error("Something went wrong, please try again.");
       error.httpStatusCode = 500;
       return next(error);
     });
@@ -367,7 +366,7 @@ const postNewPassword = (req, res, next) => {
       console.log(result);
     })
     .catch((err) => {
-      const error = new Error(err);
+      const error = new Error("Something went wrong, please try again.");
       error.httpStatusCode = 500;
       return next(error);
     });
