@@ -39,7 +39,7 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
     secret:
-      "a9b52d9e528a1a124f597104cc562ef86d030ddee39f8c9ef5819c1d06cc981e1cd1e4cfd13b34a96e2f1f1cf6a1abf883dbb2dcd9d39b3bb8b67f4a8763329", // To be funneled through the environment variables
+      "SESSION_SECRET", // To be funneled through the environment variables
     resave: false,
     saveUninitialized: false,
     store,
