@@ -1,10 +1,10 @@
 const { validationResult } = require("express-validator");
 const bcrypt = require("bcryptjs");
-const jwt = require('jsonwebtoken')
+const jwt = require("jsonwebtoken");
 
 const User = require("../models/User");
 
-const JWT_SECRET = 'REPLACE_WITH_YOUR_JWT_SECRET'; // To be fetched from env variables
+const JWT_SECRET = "REPLACE_WITH_YOUR_JWT_SECRET"; // To be fetched from env variables
 
 const signup = async (req, res, next) => {
   // ------------------------- USING CALLBACKS --------------------------
@@ -54,7 +54,9 @@ const signup = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = new User({ name, email, password: hashedPassword });
     const savedUser = await user.save();
-    res.status(201).json({ message: "User created Successfully", userId: savedUser._id });
+    res
+      .status(201)
+      .json({ message: "User created Successfully", userId: savedUser._id });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -121,28 +123,37 @@ const login = async (req, res, next) => {
       throw error;
     }
 
-
-    const user = await User.findOne({ email })
+    const user = await User.findOne({ email });
     if (!user) {
-      const error = new Error("Invalid email, User doesn't exist. Please enter a correct email address.")
+      const error = new Error(
+        "Invalid email, User doesn't exist. Please enter a correct email address."
+      );
       error.statusCode = 404;
-      error.errors = []
+      error.errors = [];
       throw error;
     }
 
-    const isMatch = await bcrypt.compare(password, user.password)
+    const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      const error = new Error("Invalid password, Please enter a correct password.")
+      const error = new Error(
+        "Invalid password, Please enter a correct password."
+      );
       error.statusCode = 401;
-      error.errors = []
+      error.errors = [];
       throw error;
     }
 
-    const token = jwt.sign({ email: user.email, userId: user._id.toString() }, JWT_SECRET, { expiresIn: '1h' })
+    const token = jwt.sign(
+      { email: user.email, userId: user._id.toString() },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
 
     res.status(200).json({
-      message: "Logged in successfully!!", token, userId: fetchedUser._id.toString()
-    })
+      message: "Logged in successfully!!",
+      token,
+      userId: fetchedUser._id.toString(),
+    });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -150,8 +161,7 @@ const login = async (req, res, next) => {
     console.log(err);
     next(err);
   }
-}
-
+};
 
 const getUserStatus = async (req, res, next) => {
   // ------------------------- USING CALLBACKS --------------------------
@@ -176,16 +186,16 @@ const getUserStatus = async (req, res, next) => {
 
   // ------------------------- USING ASYNC/AWAIT --------------------------
   try {
-    const user = await User.findById(req.userId)
+    const user = await User.findById(req.userId);
     if (!user) {
-      const error = new Error('User does not exist!!');
+      const error = new Error("User does not exist!!");
       error.statusCode = 404;
       throw error;
     }
 
     res.status(200).json({
-      status: user.status
-    })
+      status: user.status,
+    });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -193,7 +203,7 @@ const getUserStatus = async (req, res, next) => {
     console.log(err);
     next(err);
   }
-}
+};
 
 const updateUserStatus = async (req, res, next) => {
   // ------------------------- USING CALLBACKS --------------------------
@@ -244,7 +254,7 @@ const updateUserStatus = async (req, res, next) => {
     const user = await User.findById(req.userId);
 
     if (!user) {
-      const error = new Error('User does not exist!!');
+      const error = new Error("User does not exist!!");
       error.statusCode = 404;
       throw error;
     }
@@ -253,9 +263,8 @@ const updateUserStatus = async (req, res, next) => {
     await user.save();
 
     res.status(200).json({
-      message: 'Status updated successfully!!'
-    })
-
+      message: "Status updated successfully!!",
+    });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -263,6 +272,6 @@ const updateUserStatus = async (req, res, next) => {
     console.log(err);
     next(err);
   }
-}
+};
 
 module.exports = { signup, login, getUserStatus, updateUserStatus };

@@ -50,8 +50,14 @@ mongoose
   .connect(MONGODB_URI)
   .then((result) => {
     console.log("Connected to the database.");
-    app.listen(PORT, () => {
+    const server = app.listen(PORT, () => {
       console.log(`Server is running on ${PORT}`);
+    });
+    const socketIO = require("./socket");
+    const websocket = socketIO.initializeWebSocket(server);
+
+    websocket.on("connection", (socket) => {
+      console.log(`Client Connected to the websocket`);
     });
   })
   .catch((err) => {

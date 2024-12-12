@@ -7,7 +7,6 @@ const User = require("../models/User");
 
 const { clearFile } = require("../utils/file-handler");
 
-
 const getPost = async (req, res, next) => {
   // ------------------------- USING CALLBACKS --------------------------
 
@@ -36,7 +35,6 @@ const getPost = async (req, res, next) => {
 
   // ------------------------- USING ASYNC/AWAIT --------------------------
 
-
   try {
     const { postId } = req.params;
     const post = await Post.findById(postId);
@@ -51,7 +49,6 @@ const getPost = async (req, res, next) => {
       message: "Post fetched successfully!!",
       post,
     });
-
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -62,7 +59,6 @@ const getPost = async (req, res, next) => {
 };
 
 const getPosts = async (req, res, next) => {
-
   // ------------------------- USING CALLBACKS --------------------------
   // const { page = 1, limit = 10 } = req.query;
 
@@ -90,14 +86,16 @@ const getPosts = async (req, res, next) => {
   //     next(err);
   //   });
 
-
   // ------------------------- USING ASYNC/AWAIT --------------------------
 
   const { page = 1, limit = 10 } = req.query;
 
   try {
     const postCount = await Post.countDocuments();
-    const posts = await Post.find().populate('creator').skip((page - 1) * limit).limit(limit);
+    const posts = await Post.find()
+      .populate("creator")
+      .skip((page - 1) * limit)
+      .limit(limit);
 
     res.status(200).json({
       message: "Fetched posts successfully!!",
@@ -111,7 +109,6 @@ const getPosts = async (req, res, next) => {
     console.log(err);
     next(err);
   }
-
 };
 
 const createPost = async (req, res, next) => {
@@ -207,7 +204,7 @@ const createPost = async (req, res, next) => {
     res.status(201).json({
       message: "Post created successfully",
       post,
-      creator: { _id: user._id, name: user.name }
+      creator: { _id: user._id, name: user.name },
     });
   } catch (err) {
     if (!err.statusCode) {
@@ -281,7 +278,6 @@ const updatePost = async (req, res, next) => {
   //     next(err);
   //   });
 
-
   // ------------------------- USING ASYNC/AWAIT --------------------------
 
   try {
@@ -316,7 +312,7 @@ const updatePost = async (req, res, next) => {
     }
 
     if (post.creator.toString() !== req.userId) {
-      const error = new Error('Forbidden!!');
+      const error = new Error("Forbidden!!");
       error.statusCode = 403;
       throw error;
     }
@@ -336,7 +332,6 @@ const updatePost = async (req, res, next) => {
       message: "Post updated successfully!",
       post: updatedPost,
     });
-
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -344,7 +339,6 @@ const updatePost = async (req, res, next) => {
     console.log(err);
     next(err);
   }
-
 };
 
 const deletePost = async (req, res, next) => {
@@ -370,7 +364,6 @@ const deletePost = async (req, res, next) => {
   // //     console.log(err);
   // //     next(err);
   // //   });
-
 
   // Post.findById(postId).then(post => {
   //   if (!post) {
@@ -430,16 +423,15 @@ const deletePost = async (req, res, next) => {
     //     next(err);
     //   });
 
-
     const post = await Post.findById(postId);
     if (!post) {
-      const error = new Error("Post doesn't exist.")
+      const error = new Error("Post doesn't exist.");
       error.statusCode = 404;
       throw error;
     }
 
     if (post.creator.toString() !== req.userId) {
-      const error = new Error('Forbidden!!');
+      const error = new Error("Forbidden!!");
       error.statusCode = 403;
       throw error;
     }
@@ -451,7 +443,7 @@ const deletePost = async (req, res, next) => {
     const user = await User.findById(req.userId);
     user.posts.pull(postId);
     await user.save();
-    res.status(200).json({ message: "Post deleted successfully!!" })
+    res.status(200).json({ message: "Post deleted successfully!!" });
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
@@ -460,6 +452,5 @@ const deletePost = async (req, res, next) => {
     next(err);
   }
 };
-
 
 module.exports = { getPost, getPosts, createPost, updatePost, deletePost };
