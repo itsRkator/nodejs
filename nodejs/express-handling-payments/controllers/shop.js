@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 
 const pdfkit = require("pdfkit");
-const stripe = require("stripe")("STRIPE_PRIVATE_KEY"); // Stripe Private Key to be configured through the environment variables
+const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY); // Stripe Private Key to be configured through the environment variables
 
 const Order = require("../models/Order");
 const Product = require("../models/Product");

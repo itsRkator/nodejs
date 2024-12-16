@@ -154,12 +154,13 @@ const login = async (req, res, next) => {
       token,
       userId: fetchedUser._id.toString(),
     });
+    return;
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500;
     }
-    console.log(err);
     next(err);
+    return err;
   }
 };
 

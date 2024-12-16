@@ -9,7 +9,7 @@ const User = require("../models/User");
 const mailer = nodemailer.createTransport(
   sgTransport({
     auth: {
-      api_key: "SEND_GRID_API_KEY", // To be replaced and used via environment variables
+      api_key: process.env.SEND_GRID_API_KEY, // To be replaced and used via environment variables
     },
   })
 );
@@ -109,7 +109,9 @@ const postLogin = (req, res, next) => {
           return req.session.save();
         })
         .then((result) => {
-          res.redirect("/");
+          if (req.session.isLoggedIn) {
+            res.redirect("/");
+          }
         })
         .catch((err) => {
           console.error(err);

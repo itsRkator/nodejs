@@ -1,5 +1,6 @@
 const path = require("path");
 const fs = require("fs");
+const https = require("https");
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -9,6 +10,9 @@ const mongoSession = require("connect-mongodb-session");
 const csrf = require("csurf");
 const flash = require("connect-flash");
 const multer = require("multer");
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
 
 const User = require("./models/User");
 const adminRoutes = require("./routes/admin");
@@ -19,7 +23,7 @@ const MongoDBStore = mongoSession(session);
 
 const { notFoundError, internalServerError } = require("./controllers/error");
 
-const MONGODB_URI = "MONGO_URI"; // To be Replaced with actual MongoDB URI using string or environment variable
+const MONGODB_URI = process.env.DB_URI; // To be Replaced with actual MongoDB URI using string or environment variable
 
 const app = express();
 const store = new MongoDBStore({
@@ -27,6 +31,9 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 const csrfProtection = csrf();
+
+const privateKey = fs.readFileSync("server.key");
+const certificate = fs.readFileSync("server.cert");
 
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -71,9 +78,15 @@ const fileFilter = (req, file, cb) => {
 // Using Pug
 // app.set("view engine", "pug");
 // app.set("views", "views");
+const accessLogStream = fs.WriteStream(path.join(__dirname, "access.log"), {
+  flags: "a",
+});
 
 app.set("view engine", "ejs");
 app.set("views", "views");
+app.use(helmet());
+app.use(compression());
+app.use(morgan("combined", { stream: accessLogStream }));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -83,7 +96,7 @@ app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use(
   session({
-    secret: "SESSION_SECRET", // To be funneled through the environment variables
+    secret: process.env.SESSION_SECRET, // To be funneled through the environment variables
     resave: false,
     saveUninitialized: false,
     store,
@@ -133,11 +146,18 @@ app.use((err, req, res, next) => {
   });
 });
 
+const PORT = process.env.PORT || 3000;
+
 mongoose
   .connect(MONGODB_URI)
   .then((result) => {
     console.log("Connected to the Database!!");
-    app.listen(3000, () => {
+    // https
+    //   .createServer({ key: privateKey, cert: certificate }, app)
+    //   .listen(PORT, () => {
+    //     console.log("Server is running on port 3000");
+    //   });
+    app.listen(PORT, () => {
       console.log("Server is running on port 3000");
     });
   })
